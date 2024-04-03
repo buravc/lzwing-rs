@@ -11,6 +11,9 @@ fn main() {
             let compressed_file = core::compress(&args.file_path);
             compressed_file.save_to_file(&(args.file_path + "_compressed"))
         }
-        args::Command::Decompress(_) => todo!(),
+        args::Command::Decompress(args) => {
+            let decompressed_file = core::decompress(&args.file_path);
+            decompressed_file.save_to_file(&(args.file_path + "_decompressed"));
+        }
     }
 }

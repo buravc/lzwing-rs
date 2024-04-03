@@ -1,19 +1,19 @@
-use super::types::{self, AsciiString, LZWCodeTable, LZWEncodedArray};
+use super::types::{self, AsciiString, LZWEncodeTable, LZWEncodedArray};
 
 pub struct CompressedFile {
-    code_table: types::LZWCodeTable,
+    code_table: types::LZWEncodeTable,
     output: LZWEncodedArray,
 }
 
 pub fn compress(file_path: &str) -> CompressedFile {
     let read_file = std::fs::read(file_path).expect("file to be readable");
-    let mut code_table = LZWCodeTable::new();
+    let mut code_table = LZWEncodeTable::new();
 
     for i in 0..256 {
         code_table.insert(vec![i as u8], i);
     }
 
-    let mut s: AsciiString = vec![read_file[0]];
+    let mut s = AsciiString::new();
 
     let mut output = LZWEncodedArray::with_capacity(read_file.len());
 
